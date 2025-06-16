@@ -5,6 +5,7 @@ import com.example.Titan.daos.auth.UserAuthDao;
 import com.example.Titan.daos.auth.UserDao;
 import com.example.Titan.daos.auth.UserTokensDao;
 import com.example.Titan.dtos.auth.UserAuthCreate;
+import com.example.Titan.dtos.auth.UserCreateDto;
 import com.example.Titan.dtos.auth.VerifyOtpDto;
 import com.example.Titan.entity.user.User;
 import com.example.Titan.entity.user.UserAuth;
@@ -126,5 +127,27 @@ public User ensureUserExit(String mobile){
         return user;
     }
 
+    public UserCreateDto getUser(Long id){
+        Optional<User> byId = userDao.findById(id);
+        User user = byId.get();
+        UserCreateDto userDetails = new UserCreateDto();
+        userDetails.setEmail(user.getEmail());
+        userDetails.setDob(user.getDob());
+        userDetails.setName(user.getName());
+        userDetails.setProfileUrl(user.getProfileUrl());
+        userDetails.setMobile(user.getMobile());
+        return userDetails;
+    }
+    public String updateUser(UserCreateDto userDetails, Long id){
+        Optional<User> byId = userDao.findById(id);
+        User user = byId.get();
+        user.setEmail(userDetails.getEmail());
+        user.setName(userDetails.getName());
+        user.setDob(userDetails.getDob());
+        user.setMobile(userDetails.getMobile());
+        user.setProfileUrl(userDetails.getProfileUrl());
+        userDao.saveAndFlush(user);
+        return "user details update successfully";
+    }
 }
 

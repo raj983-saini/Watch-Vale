@@ -2,16 +2,15 @@ package com.example.Titan.controller.auth;
 
 import com.example.Titan.Response.ApiResponseDto;
 import com.example.Titan.dtos.auth.UserAuthCreate;
+import com.example.Titan.dtos.auth.UserCreateDto;
 import com.example.Titan.dtos.auth.VerifyOtpDto;
+import com.example.Titan.entity.user.User;
 import com.example.Titan.externalservice.processor.SmsProcessor;
 import com.example.Titan.service.auth.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -44,5 +43,13 @@ private final UserService userService;
             return ResponseEntity.ok(ApiResponseDto.error("Something wrong",userService.verifyOtp(verifyOtpDto)));
         }
     }
+    @GetMapping("/profile")
+    public  ResponseEntity<ApiResponseDto> getUser(@RequestAttribute User user){
+        return ResponseEntity.ok(ApiResponseDto.success(userService.getUser(user.getId())));
+    }
 
+    @PostMapping("/update")
+    public ResponseEntity<ApiResponseDto> updateUser(@RequestBody UserCreateDto userCreateDto , @RequestAttribute User user){
+        return ResponseEntity.ok(ApiResponseDto.success(userService.updateUser(userCreateDto,user.getId())));
+    }
 }
