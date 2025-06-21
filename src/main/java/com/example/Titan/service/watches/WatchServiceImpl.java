@@ -7,6 +7,7 @@ import com.example.Titan.entity.watches.WatchImage;
 import com.example.Titan.entity.watches.Watches;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +22,9 @@ public class WatchServiceImpl {
         return watchDao.save(watches);
     }
     public List<Watches> getall(){return  watchDao.findAll();}
-    public WatchesDto getWatch(String name) {
-        Watches watches = watchDao.findByName(name)
-                .orElseThrow(() -> new RuntimeException("Watch not found with name: " + name));
-        return mapToDto(watches);
+    public List<Watches> getallByTags(List<String> tags ){return  watchDao.findByTagNames(tags);}
+    public List<Watches> getWatch(String name) {
+       return watchDao.searchByFirstWord(name);
     }
     private WatchesDto mapToDto(Watches watch) {
         WatchesDto dto = new WatchesDto();

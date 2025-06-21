@@ -23,6 +23,7 @@ public class WatchesDto {
     private String material;
     private double discount;
     private List<String> functions;
+    private List<String> tags;
     private String screenSize;
     private String batteryLife;
     private int warrantyPeriod;

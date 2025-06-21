@@ -9,6 +9,7 @@ public class UserCreateDto {
         private String name;
          private LocalDate dob;
          private String profileUrl;
+         private long role;
 
 }
 

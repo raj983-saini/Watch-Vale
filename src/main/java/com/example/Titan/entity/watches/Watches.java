@@ -21,6 +21,9 @@ public class Watches extends LongBasid {
     @Column(name = "brand")
     private String brand;
 
+    @Column(name = "watch_images")
+    private String  watch_images;
+
     @Column(name = "watch_type")
     private String type;
 
@@ -96,6 +99,6 @@ public class Watches extends LongBasid {
     @Column(name = "is_bluetooth")
     private boolean isBluetooth;
 
-//    @Column(name = "tags")
-//    private String tags;
+    @OneToMany(mappedBy = "watch", cascade = CascadeType.ALL)
+    private List<WatchTag> tags = new ArrayList<>();
 }

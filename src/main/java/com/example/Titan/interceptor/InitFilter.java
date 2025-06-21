@@ -21,6 +21,8 @@ public class InitFilter implements Filter {
 
     @SneakyThrows
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
+        log.info("Incoming Content-Type: {}", ((HttpServletRequest) request).getContentType());
+
         MDC.put(REQUEST_ID_HEADER_NAME, ((HttpServletRequest) request).getHeader("X-Request-ID"));
 
         String clientIp = getClientIp ((HttpServletRequest) request);
@@ -30,7 +32,7 @@ public class InitFilter implements Filter {
         long startTime = System.currentTimeMillis();
         log.info("Request Token: {}", ((HttpServletRequest) request).getHeader("token"));
         if (((HttpServletRequest) request).getContentType() != null
-                && ((HttpServletRequest) request).getContentType().startsWith("multipart/")) {
+                && ((HttpServletRequest) request).getContentType().startsWith("multipart/") ) {
             request = new StandardMultipartHttpServletRequest((HttpServletRequest) request);
         }
         InterceptorRequestWrapper interceptorRequestWrapper = new InterceptorRequestWrapper((HttpServletRequest) request);

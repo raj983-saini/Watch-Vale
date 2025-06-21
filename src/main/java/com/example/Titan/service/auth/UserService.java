@@ -136,6 +136,7 @@ public User ensureUserExit(String mobile){
         userDetails.setName(user.getName());
         userDetails.setProfileUrl(user.getProfileUrl());
         userDetails.setMobile(user.getMobile());
+        userDetails.setRole(user.getRole());
         return userDetails;
     }
     public String updateUser(UserCreateDto userDetails, Long id){
@@ -144,7 +145,6 @@ public User ensureUserExit(String mobile){
         user.setEmail(userDetails.getEmail());
         user.setName(userDetails.getName());
         user.setDob(userDetails.getDob());
-        user.setMobile(userDetails.getMobile());
         user.setProfileUrl(userDetails.getProfileUrl());
         userDao.saveAndFlush(user);
         return "user details update successfully";
